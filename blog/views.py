@@ -90,12 +90,13 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
                 for t in tags_list:
                     t = t.strip()
-                    tag, is_tag_created = Tag.objects.get_or_create(name=t)
-                    if is_tag_created:
-                        tag.slug = slugify(t, allow_unicode=True)
-                        tag.save()
-                    self.object.tags.add(tag)
-
+                    #여기
+                    if t != '':
+                        tag, is_tag_created = Tag.objects.get_or_create(name=t)
+                        if is_tag_created:
+                            tag.slug = slugify(t, allow_unicode=True)
+                            tag.save()
+                        self.object.tags.add(tag)
             return response
         else:
             return redirect('/blog/')
